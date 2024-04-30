@@ -66,10 +66,12 @@ public class CallApiConsole {
 			System.out.println(
 					"Request to Student Images API failed: " + con.getResponseCode() + ", " + con.getResponseMessage());
 			// if no profile picture exists for student, use a default picture
-			InputStream defImgIn = CallApiConsole.class.getResourceAsStream("images/default_picture.jpg");
+			InputStream defImgIn = CallApiConsole.class.getResourceAsStream("images/Rocky.jpg");
 			Files.copy(defImgIn, new File(outputDirPath, usfId + "_no_image.jpg").toPath(),
 					StandardCopyOption.REPLACE_EXISTING);
 			defImgIn.close();
+			// Delete any existing actual picture of this student
+			new File(outputDirPath, usfId + ".jpg").delete();
 			studentsWithMissingImages++;
 		}
 		con.disconnect();
